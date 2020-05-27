@@ -1,0 +1,4 @@
+__pycache__/
+logs/reports.txt
+files/*.json
+test.py
