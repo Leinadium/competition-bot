@@ -4,8 +4,8 @@ from log import Log
 
 PATH = ''
 LINK = "https://www.worldcubeassociation.org/competitions"
-SEND_FLAG = True
-SIGNATURE = "\n\n^(WCACompetitionsBot)"
+SEND_FLAG = False
+SIGNATURE = "\n\n^(WCACompetitionsBot - 2.1)"
 
 
 def main():
@@ -26,6 +26,7 @@ def main():
 
         save_competitions(actual, PATH)
 
+        log.update_resume(new_competitions=len(new), total_competitions=len(actual))
         log.save('success')
 
     except Exception as e:

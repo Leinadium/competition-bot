@@ -92,6 +92,8 @@ def read_messages(send_flag):
 
                 u = User(m.author.name, city, country.strip().upper(), radius)
                 subscribe.append(u)
+                if send_flag:
+                    unread.append(m)
 
             elif m.subject.lower().strip() == 'unsubscribe':
                 unsubscribe.append(m.author.name)
@@ -121,7 +123,7 @@ def save_users(list_users, path):
     """Saves the users into the file as json"""
     list_dict = [a.__dict__ for a in list_users]
     with io.open(path + 'files/users.json', 'w+', encoding='utf8') as f:
-        json.dump(list_dict, f)
+        json.dump(list_dict, f, indent=2)
     return
 
 

@@ -99,7 +99,7 @@ def compare_competitions(old, new):
 def save_competitions(list_competitions, path):
     list_dict = [a.__dict__ for a in list_competitions]
     with io.open(path + 'files/competitions.json', 'w+', encoding='utf8') as f:
-        json.dump(list_dict, f)
+        json.dump(list_dict, f, indent=2)
 
     return
 

@@ -2,8 +2,8 @@ from users import *
 from log import Log
 
 PATH = ''
-SEND_FLAG = True
-SIGNATURE = "\n\n^(WCACompetitionsBot)"
+SEND_FLAG = False
+SIGNATURE = "\n\n^(WCACompetitionsBot - 2.1)"
 
 
 def main():
@@ -29,6 +29,7 @@ def main():
 
         save_users(list_users, PATH)  # stores it again in the file.
 
+        log.update_resume(new_users=len(sub), total_users=len(list_users))
         log.save('success')
     except Exception as e:
         print("Exception occurred: ", e)

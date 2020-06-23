@@ -1,3 +1,25 @@
-# all users were removed for security
-# all competitions were removed for no reason
-# all crentials were removed because yeah
+# users: 
+
+[
+  {
+    "name": "Leinadium",
+    "radius": -1.0,
+    "city": "UNITED STATES",
+    "country": "UNITED STATES",
+    "coords": null
+  }
+]
+
+# comps:
+
+[
+  {
+    "name": "Lonely Denmark 2020",
+    "city": "KASTRUP",
+    "country": "DENMARK",
+    "date": "Jul 11 - 12, 2020",
+    "link": "/competitions/LonelyDenmark2020",
+    "coords": null
+  }
+]
+
