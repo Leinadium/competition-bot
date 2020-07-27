@@ -3,3 +3,5 @@ logs/reports.txt
 files/*.json
 test.py
 logs/resume.json
+old/
+logs/
