@@ -31,7 +31,7 @@ def get_html(link):
     """Get the html page, and check for error code"""
     url = requests.get(link)
     code = url.status_code
-    if code != 200:
+    if code >= 400:
         raise Exception('BadReturnHtml')
     return url
 
@@ -70,7 +70,7 @@ def get_new_competitions(link):
     return list_competitions
 
 
-def match_competitions_users(competitions, users, send_flag, signature):
+def match_competitions_users(competitions, users, send_flag, signature, reddit):
     for u in users:
         competitions_to_send = []
         for c in competitions:
@@ -78,7 +78,7 @@ def match_competitions_users(competitions, users, send_flag, signature):
                 if send_flag:
                     competitions_to_send.append(c)
                 print("    Send %s to %s" % (c.name, u.name))
-        u.send_competitions(competitions_to_send, signature)
+        u.send_competitions(competitions_to_send, signature, reddit)
 
     return
 

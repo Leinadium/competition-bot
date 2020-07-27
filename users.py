@@ -14,7 +14,7 @@ class User:
         self.coords = coords if coords else get_coords(', '.join([city, country])) if radius > 0 else None
         # sets the coords if radius is specified
 
-    def send_competitions(self, list_c, signature):
+    def send_competitions(self, list_c, signature, reddit):
         """Receives a list of competitions, and the final signature. Sends the messages for each comp."""
         if len(list_c) == 0:
             return
@@ -23,14 +23,19 @@ class User:
             m += c.create_message()
         m += signature
         reddit.redditor(self.name).message("New competition(s)!", m)
+        
 
-    def send_welcome(self, send_flag, signature):
+    def send_welcome(self, send_flag, signature, reddit):
         """Creates the welcome message and send."""
         if not send_flag:  # send_flag == True when testing
             print("Welcome %s, at %s in %s, with a %0.2f radius" % (self.name, self.city, self.country, self.radius))
             return
         m = "Thanks for subscribing to WCACompetitionsBot: "
-        m += "\n\n%s, at %s" % (self.city, self.country)
+        if not city:
+            m += "\n\n%s" % self.country
+        else:
+            m += "\n\n%s, at %s" % (self.city, self.country)
+        
         if self.radius >= 0:
             m += ", radius = %0.2f." % self.radius
         m += signature
@@ -49,14 +54,14 @@ class User:
         return False
 
 
-def send_invalid(message):
+def send_invalid(message, reddit):
     """Sends a invalid message to the user."""
     m = "Sorry, I couldn't understand the location, of you gave a invalid radius. Please try again with a new message."
     reddit.redditor(message.author.name).message("Invalid subscription!", m)
     return
 
 
-def read_messages(send_flag):
+def read_messages(send_flag, reddit):
     """Reads new messages. Returns two list of User objects, to add and remove."""
     unsubscribe = list()
     subscribe = list()
@@ -73,12 +78,12 @@ def read_messages(send_flag):
                         radius = float(radius)  # checks if the radius is a float.
                         text = text[:text.find('(')]
                     except ValueError:  # checks if error
-                        send_invalid(m)  # tell user he is wrong
+                        send_invalid(m, reddit)  # tell user he is wrong
                         unread.append(m)  # reads the message
                         continue
 
                 elif "(" in text or ")" in text:
-                    send_invalid(m)  # if it passes here, the radius is wrong
+                    send_invalid(m, reddit)  # if it passes here, the radius is wrong
                     unread.append(m)
                     continue
                 else:
@@ -135,8 +140,8 @@ def load_users(path):
     return [User(a['name'], a['city'], a['country'], a['radius'], coords=a['coords']) for a in list_dict]
 
 
-def get_reddit_credentials():
-    with open('files/credentials.json') as f:
+def get_reddit_credentials(path):
+    with open(path + 'files/credentials.json') as f:
         credentials = json.load(f)
 
     r = praw.Reddit(user_agent=credentials['user_agent'],
@@ -147,5 +152,3 @@ def get_reddit_credentials():
 
     return r
 
-
-reddit = get_reddit_credentials()

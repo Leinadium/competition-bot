@@ -1,15 +1,17 @@
 from users import *
 from log import Log
+from os import path, sep
 
-PATH = ''
-SEND_FLAG = False
-SIGNATURE = "\n\n^(WCACompetitionsBot - 2.1)"
+PATH = path.dirname(path.abspath(__file__)) + sep
+SEND_FLAG = True
+SIGNATURE = "\n\n^(WCACompetitionsBot - v2.2)"
 
 
 def main():
     log = Log(PATH, 'users')
     try:
-        new = read_messages(SEND_FLAG)
+        reddit = get_reddit_credentials(PATH)
+        new = read_messages(SEND_FLAG, reddit)
         if not new:
             log.save("no-users")
             exit(0)
@@ -24,13 +26,14 @@ def main():
         log.new = len(unsub)
         list_users = remove_users(list_users, unsub)  # updates the list, removing
         for u in sub:
-            u.send_welcome(SEND_FLAG, SIGNATURE)  # send the new users a welcome
+            u.send_welcome(SEND_FLAG, SIGNATURE, reddit)  # send the new users a welcome
             list_users.append(u)
 
         save_users(list_users, PATH)  # stores it again in the file.
 
         log.update_resume(new_users=len(sub), total_users=len(list_users))
         log.save('success')
+        
     except Exception as e:
         print("Exception occurred: ", e)
         log.save('error')

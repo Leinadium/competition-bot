@@ -1,11 +1,12 @@
 from competitions import *
-from users import load_users
+from users import load_users, get_reddit_credentials
 from log import Log
+from os import path, sep
 
-PATH = ''
+PATH = path.dirname(path.abspath(__file__)) + sep
 LINK = "https://www.worldcubeassociation.org/competitions"
-SEND_FLAG = False
-SIGNATURE = "\n\n^(WCACompetitionsBot - 2.1)"
+SEND_FLAG = True
+SIGNATURE = "\n\n^(WCACompetitionsBot - v2.2)"
 
 
 def main():
@@ -22,7 +23,8 @@ def main():
 
         if len(new) != 0:
             users = load_users(PATH)
-            match_competitions_users(new, users, SEND_FLAG, SIGNATURE)
+            reddit = get_reddit_credentials(PATH)
+            match_competitions_users(new, users, SEND_FLAG, SIGNATURE, reddit)
 
         save_competitions(actual, PATH)
 
