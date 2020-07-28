@@ -1,4 +1,4 @@
-# users: 
+# the following is an example of what a user is at users.json: 
 
 [
   {
@@ -10,16 +10,26 @@
   }
 ]
 
-# comps:
+# the following is an example of what a competition is at competitions.json:
 
-[
-  {
-    "name": "Lonely Denmark 2020",
-    "city": "KASTRUP",
+{
+    "name": "Hvidovre Sommerhygge 2020",
+    "city": "HVIDOVRE",
     "country": "DENMARK",
-    "date": "Jul 11 - 12, 2020",
-    "link": "/competitions/LonelyDenmark2020",
-    "coords": null
-  }
-]
+    "date": "AGO 01, 2020",
+    "link": "https://www.worldcubeassociation.org/competitions/HvidovreSommerhygge2020",
+    "coords": [
+      55.627117,
+      12.451179
+    ]
+ }
 
+# the following is an example of what the credentials.json file is:
+
+{
+	"user_agent": "xxxx",
+	"client_id": "xxxx",
+	"client_secret": "xxxx",
+	"username": "xxxx",
+	"password": "xxxx"
+}
