@@ -2,17 +2,24 @@ from users import *
 from log import Log
 from os import path, sep
 
+# This script is executed via crontab, so it needs the script's directory to find the modules and files
 PATH = path.dirname(path.abspath(__file__)) + sep
-SEND_FLAG = True
-SIGNATURE = "\n\n^(WCACompetitionsBot - v2.2)"
+
+SEND_FLAG = True  # False if testing
+SIGNATURE = "\n\n^(WCACompetitionsBot - v2.4)"
 
 
 def main():
+    # Starting Log object to save at files/ later
     log = Log(PATH, 'users')
     try:
+        # Starting reddit
         reddit = get_reddit_credentials(PATH)
+
+        # Reading new messages.
         new = read_messages(SEND_FLAG, reddit)
         if not new:
+            print("no new users")
             log.save("no-users")
             exit(0)
 

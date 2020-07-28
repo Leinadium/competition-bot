@@ -1,7 +1,7 @@
 __pycache__/
-logs/reports.txt
-files/*.json
+files/credentials.json
+files/competitions.json
+files/users.json
 test.py
-logs/resume.json
 old/
 logs/

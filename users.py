@@ -23,7 +23,6 @@ class User:
             m += c.create_message()
         m += signature
         reddit.redditor(self.name).message("New competition(s)!", m)
-        
 
     def send_welcome(self, send_flag, signature, reddit):
         """Creates the welcome message and send."""
@@ -151,4 +150,3 @@ def get_reddit_credentials(path):
                     password=credentials['password'])
 
     return r
-

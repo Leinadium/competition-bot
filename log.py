@@ -61,4 +61,3 @@ class Log:
             json.dump(res, f, indent=2)
 
         return
-

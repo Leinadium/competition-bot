@@ -12,6 +12,9 @@ it will send notifications for all users that wants that competitions
 
 This script doesn't have the users.json, competitions.json and credentials.json file, for security reasons.
 
-## Modules used:
-praw, io, json, requests, beautifulsoup, datetime, geopy
+## Requires:
+praw (to interact with reddit), geopy (to get coordinates of users and competitions), 
+country_converter (to convert iso2 format to country name), 
+besides io, json, requests and datetime.
+
 
