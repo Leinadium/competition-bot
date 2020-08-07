@@ -25,7 +25,7 @@ class Comp:
 
     def create_message(self):
         # s = '\n\n[' + self.name + '](https://www.worldcubeassociation.org' + self.link + ')'
-        s = '\n\n[%s][%s]' % (self.name, self.link)
+        s = '\n\n[%s](%s)' % (self.name, self.link)
         s += ', at ' + self.city + ' - ' + self.country
         s += ', on ' + self.date
         return s

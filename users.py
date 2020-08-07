@@ -30,7 +30,7 @@ class User:
             print("Welcome %s, at %s in %s, with a %0.2f radius" % (self.name, self.city, self.country, self.radius))
             return
         m = "Thanks for subscribing to WCACompetitionsBot: "
-        if not city:
+        if not self.city:
             m += "\n\n%s" % self.country
         else:
             m += "\n\n%s, at %s" % (self.city, self.country)
