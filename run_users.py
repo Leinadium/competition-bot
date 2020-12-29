@@ -15,19 +15,16 @@ def main():
     try:
         # Starting reddit
         reddit = get_reddit_credentials(PATH)
-
         # Reading new messages.
         new = read_messages(SEND_FLAG, reddit)
         if not new:
             print("no new users")
             log.save("no-users")
             exit(0)
-
         list_users = load_users(PATH)  # get the stored users
         log.old = len(list_users)
         # if not list_users:
         #     raise Exception('LoadingUserError')
-
         sub, unsub = new  # new is a list with new users, and user unsubscribing
         log.actual = len(sub)
         log.new = len(unsub)

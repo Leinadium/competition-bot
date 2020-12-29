@@ -2,6 +2,7 @@ from measurement import *
 import praw
 import io
 import json
+import re
 
 
 class User:
@@ -71,6 +72,7 @@ def read_messages(send_flag, reddit):
             if m.subject.lower().strip() == 'subscribe':  # message to be treated
                 text = m.body
                 # country, city (radius)
+                '''
                 if "(" in text and ")" in text:
                     radius = (text[text.find('(') + 1:text.find(")")])  # gets the radius
                     try:
@@ -80,7 +82,7 @@ def read_messages(send_flag, reddit):
                         send_invalid(m, reddit)  # tell user he is wrong
                         unread.append(m)  # reads the message
                         continue
-
+                    print(radius)
                 elif "(" in text or ")" in text:
                     send_invalid(m, reddit)  # if it passes here, the radius is wrong
                     unread.append(m)
@@ -93,8 +95,38 @@ def read_messages(send_flag, reddit):
                     city = city.strip().upper()
                 else:
                     [country, city] = [text, None]
+                '''
+                if ')' in text and '(' in text:  # radius is defined
+                    r = re.match('([a-zA-Z ]+),([a-zA-Z ]+)(\\([0-9]+\\))', text)
+                    if r is None:   # invalid radius
+                        if not send_flag:
+                            print("invalid:", text)
+                        else:
+                            send_invalid(m, reddit)
+                            unread.append(m)
+                        continue
+                    country, city = text.split(',')
+                    radius = int(re.search('([0-9]+)', city).group(0))  # get the radius
+                    city = city.split('(')[0]
 
-                u = User(m.author.name, city, country.strip().upper(), radius)
+                else:  # no radius, only city or country
+                    if re.match('([a-zA-Z ]+),([a-zA-Z ]+)', text) is not None:  # COUNTRY, CITY
+                        country, city = text.split(',')
+                    elif re.match('([a-zA-Z ]+)', text) is not None:
+                        country, city = text, None
+                    else:
+                        if not send_flag:
+                            print("invalid:", text)
+                        else:
+                            send_invalid(m, reddit)
+                            unread.append(m)
+                        continue
+                    radius = -1
+
+                country = country.strip().upper()
+                city = city.strip().upper() if city is not None else city
+
+                u = User(m.author.name, city, country, radius)
                 subscribe.append(u)
                 if send_flag:
                     unread.append(m)
